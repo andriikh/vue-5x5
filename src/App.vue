@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <block/>
+    <div v-if="ready" class="blocks">
+      <div v-for="line of matrix" :key="line[0]" class="line">
+        <block v-for="el of line" :color="el.color" :status="el.status" :key="el.color" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,6 +19,7 @@ export default {
       colors: [],
       matrix: [],
       size: 4,
+      ready: false,
     }
   },
   methods:{
@@ -32,9 +37,11 @@ export default {
         this.matrix[i] = []
         for(let j = 0; j < this.size; j++){
           let color = this.addToMatrix();
-          this.matrix[i].push([color]);
+          this.matrix[i].push({color: color, status: false});
         }
       }
+
+      this.ready = true;
     },
     getRndColor(){
       let color = "";
@@ -65,5 +72,10 @@ export default {
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+.line{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>
