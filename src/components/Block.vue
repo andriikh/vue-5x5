@@ -1,27 +1,37 @@
 <template>
-    <div class="block" :style="'background-color:#' + color">
-        <span class="colorText">#{{color}}</span>
+    <div @click="onclick()" class="block" :style="style">
+        <span class="colorText">{{data.status ? '&#10003;' : data.active ? `#${data.color}`  : '?'}}</span>
     </div>
 </template>
 <script>
 export default {
     name: "block",
     props: {
-        color: String,
-        status: Boolean,
+        data: Object,
+        onclick: Function,
     },
     created: function(){
-        console.log(this.color)
+        
+    },
+    computed: {
+        style: function(){
+            let style;
+            if(this.data.active == true){
+                style = `background-color: #${this.data.color}`
+            }
+            return style;
+        }
     }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
     .block{
         width: 100px;
         height: 100px;
-        border: 2px solid #fff;
+        border: 2px solid #eee;
         text-align: center;
         font-weight: bold;
+        cursor: pointer;
     }
     .colorText{
         position: relative;
