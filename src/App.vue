@@ -74,7 +74,18 @@ export default {
       return color;
     },
     activateBlock(i, j){ // block onclick
+      if(this.activeBlocks[0]){
+        if(this.activeBlocks[0].i === i && this.activeBlocks[0].j === j){
+          //..
+        }else{
+          this.activate(i, j)
+        }
+      }else{
+        this.activate(i, j)
+      }
       
+    },
+    activate(i, j){
       if(!this.matrix[i][j].status && !this.timer){
         this.matrix[i][j].active = true;
         this.activeBlocks.push({i: i, j: j});
