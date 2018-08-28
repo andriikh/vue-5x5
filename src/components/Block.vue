@@ -1,6 +1,7 @@
 <template>
     <div @click="onclick()" class="block" :style="style">
-        <span class="colorText">{{data.status ? '&#10003;' : data.active ? `#${data.color}`  : '?'}}</span>
+        <span v-if="!data.prop" class="colorText">{{data.status ? '&#10003;' : data.active ? `#${data.color}`  : '?'}}</span>
+        <span v-if="data.prop" class="propText">{{size}}x{{size}}</span>
     </div>
 </template>
 <script>
@@ -8,6 +9,7 @@ export default {
     name: "block",
     props: {
         data: Object,
+        size: Number,
         onclick: Function,
     },
     created: function(){
@@ -16,7 +18,10 @@ export default {
     computed: {
         style: function(){
             let style;
-            if(this.data.active == true){
+            if(this.data.prop){
+                style = 'background-color: #eee'
+            }
+            else if(this.data.active == true){
                 style = `background-color: #${this.data.color}`
             }
             return style;
@@ -37,6 +42,10 @@ export default {
         position: relative;
         top: calc(50% - 12px);
         text-shadow: 0 0 3px #fff;
+    }
+    .propText{
+        @extend .colorText;
+        color: black;
     }
 </style>
 
